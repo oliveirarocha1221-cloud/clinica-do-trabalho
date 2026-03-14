@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avaliação Psicossocial</title>
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background: linear-gradient(135deg,#0c4a6e,#2563eb);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+}
+.container{
+    background:white;
+    width:700px;
+    max-width:90%;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+h1, h2{
+    color:#0c4a6e;
+    text-align:center;
+}
+.categoria{
+    margin-top:25px;
+    color:#0c4a6e;
+    border-bottom:2px solid #0c4a6e;
+    padding-bottom:5px;
+}
+label{
+    display:block;
+    margin-top:5px;
+}
+input[type="text"], textarea{
+    width:100%;
+    padding:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    margin-top:5px;
+}
+textarea{
+    resize: vertical;
+}
+button{
+    margin-top:25px;
+    width:100%;
+    padding:14px;
+    background:#0c4a6e;
+    border:none;
+    color:white;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+button:hover{
+    background:#08364f;
+}
+.pagina{
+    display:none;
+}
+.ativa{
+    display:block;
+}
+.nav{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<form id="formulario">
+
+<!-- PAGINA 1 -->
+<div class="pagina ativa">
+<h1>Avaliação Psicossocial</h1>
+<p><b>Empresa</b></p>
+<input type="text" name="empresa" required>
+<p><b>Cargo</b></p>
+<input type="text" name="cargo" required>
+<button type="button" onclick="proximaPagina()">Próximo</button>
+</div>
+
+<!-- PAGINA 2: Carga de Trabalho -->
+<div class="pagina">
+<h2 class="categoria">Carga de Trabalho</h2>
+<p>1. A quantidade de trabalho que tenho é adequada para o tempo disponível.</p>
+<label><input type="radio" name="p1" required>Nunca</label>
+<label><input type="radio" name="p1">Raramente</label>
+<label><input type="radio" name="p1">Às vezes</label>
+<label><input type="radio" name="p1">Frequentemente</label>
+<label><input type="radio" name="p1">Sempre</label>
+
+<p>2. Frequentemente sinto que tenho muito trabalho para fazer.</p>
+<label><input type="radio" name="p2" required>Nunca</label>
+<label><input type="radio" name="p2">Raramente</label>
+<label><input type="radio" name="p2">Às vezes</label>
+<label><input type="radio" name="p2">Frequentemente</label>
+<label><input type="radio" name="p2">Sempre</label>
+
+<p>3. Tenho prazos razoáveis para cumprir minhas tarefas.</p>
+<label><input type="radio" name="p3" required>Nunca</label>
+<label><input type="radio" name="p3">Raramente</label>
+<label><input type="radio" name="p3">Às vezes</label>
+<label><input type="radio" name="p3">Frequentemente</label>
+<label><input type="radio" name="p3">Sempre</label>
+
+<div class="nav">
+<button type="button" onclick="voltarPagina()">Voltar</button>
+<button type="button" onclick="proximaPagina()">Próximo</button>
+</div>
+</div>
+
+<!-- PAGINA 3: Autonomia -->
+<div class="pagina">
+<h2 class="categoria">Autonomia</h2>
+<p>4. Tenho liberdade para decidir como realizar minhas tarefas.</p>
+<label><input type="radio" name="p4" required>Nunca</label>
+<label><input type="radio" name="p4">Raramente</label>
+<label><input type="radio" name="p4">Às vezes</label>
+<label><input type="radio" name="p4">Frequentemente</label>
+<label><input type="radio" name="p4">Sempre</label>
+
+<p>5. Posso influenciar decisões relacionadas ao meu trabalho.</p>
+<label><input type="radio" name="p5" required>Nunca</label>
+<label><input type="radio" name="p5">Raramente</label>
+<label><input type="radio" name="p5">Às vezes</label>
+<label><input type="radio" name="p5">Frequentemente</label>
+<label><input type="radio" name="p5">Sempre</label>
+
+<p>6. Tenho controle sobre como organizo meu trabalho.</p>
+<label><input type="radio" name="p6" required>Nunca</label>
+<label><input type="radio" name="p6">Raramente</label>
+<label><input type="radio" name="p6">Às vezes</label>
+<label><input type="radio" name="p6">Frequentemente</label>
+<label><input type="radio" name="p6">Sempre</label>
+
+<div class="nav">
+<button type="button" onclick="voltarPagina()">Voltar</button>
+<button type="button" onclick="proximaPagina()">Próximo</button>
+</div>
+</div>
+
+<!-- PAGINA 4: Ambiente de Trabalho -->
+<div class="pagina">
+<h2 class="categoria">Ambiente de Trabalho</h2>
+<p>7. Sinto que o ambiente físico de trabalho é seguro.</p>
+<label><input type="radio" name="p7" required>Nunca</label>
+<label><input type="radio" name="p7">Raramente</label>
+<label><input type="radio" name="p7">Às vezes</label>
+<label><input type="radio" name="p7">Frequentemente</label>
+<label><input type="radio" name="p7">Sempre</label>
+
+<p>8. O ambiente contribui para meu bem-estar.</p>
+<label><input type="radio" name="p8" required>Nunca</label>
+<label><input type="radio" name="p8">Raramente</label>
+<label><input type="radio" name="p8">Às vezes</label>
+<label><input type="radio" name="p8">Frequentemente</label>
+<label><input type="radio" name="p8">Sempre</label>
+
+<p>9. Existem condições adequadas para trabalhar.</p>
+<label><input type="radio" name="p9" required>Nunca</label>
+<label><input type="radio" name="p9">Raramente</label>
+<label><input type="radio" name="p9">Às vezes</label>
+<label><input type="radio" name="p9">Frequentemente</label>
+<label><input type="radio" name="p9">Sempre</label>
+
+<div class="nav">
+<button type="button" onclick="voltarPagina()">Voltar</button>
+<button type="button" onclick="proximaPagina()">Próximo</button>
+</div>
+</div>
+
+<!-- PAGINA 5: Relacionamento no Trabalho -->
+<div class="pagina">
+<h2 class="categoria">Relacionamento no Trabalho</h2>
+<p>10. Tenho bom relacionamento com meus colegas de trabalho.</p>
+<label><input type="radio" name="p10" required>Nunca</label>
+<label><input type="radio" name="p10">Raramente</label>
+<label><input type="radio" name="p10">Às vezes</label>
+<label><input type="radio" name="p10">Frequentemente</label>
+<label><input type="radio" name="p10">Sempre</label>
+
+<p>11. Recebo apoio dos colegas quando preciso.</p>
+<label><input type="radio" name="p11" required>Nunca</label>
+<label><input type="radio" name="p11">Raramente</label>
+<label><input type="radio" name="p11">Às vezes</label>
+<label><input type="radio" name="p11">Frequentemente</label>
+<label><input type="radio" name="p11">Sempre</label>
+
+<p>12. Existe respeito entre os profissionais da empresa.</p>
+<label><input type="radio" name="p12" required>Nunca</label>
+<label><input type="radio" name="p12">Raramente</label>
+<label><input type="radio" name="p12">Às vezes</label>
+<label><input type="radio" name="p12">Frequentemente</label>
+<label><input type="radio" name="p12">Sempre</label>
+
+<div class="nav">
+<button type="button" onclick="voltarPagina()">Voltar</button>
+<button type="button" onclick="proximaPagina()">Próximo</button>
+</div>
+</div>
+
+<!-- PAGINA 6: Reconhecimento -->
+<div class="pagina">
+<h2 class="categoria">Reconhecimento</h2>
+<p>13. Meu trabalho é reconhecido pela empresa.</p>
+<label><input type="radio" name="p13" required>Nunca</label>
+<label><input type="radio" name="p13">Raramente</label>
+<label><input type="radio" name="p13">Às vezes</label>
+<label><input type="radio" name="p13">Frequentemente</label>
+<label><input type="radio" name="p13">Sempre</label>
+
+<p>14. Recebo feedback sobre meu desempenho.</p>
+<label><input type="radio" name="p14" required>Nunca</label>
+<label><input type="radio" name="p14">Raramente</label>
+<label><input type="radio" name="p14">Às vezes</label>
+<label><input type="radio" name="p14">Frequentemente</label>
+<label><input type="radio" name="p14">Sempre</label>
+
+<p>15. Sinto que meu trabalho é valorizado.</p>
+<label><input type="radio" name="p15" required>Nunca</label>
+<label><input type="radio" name="p15">Raramente</label>
+<label><input type="radio" name="p15">Às vezes</label>
+<label><input type="radio" name="p15">Frequentemente</label>
+<label><input type="radio" name="p15">Sempre</label>
+
+<div class="nav">
+<button type="button" onclick="voltarPagina()">Voltar</button>
+<button type="button" onclick="proximaPagina()">Próximo</button>
+</div>
+</div>
+
+<!-- PAGINA 7: Pressão no Trabalho -->
+<div class="pagina">
+<h2 class="categoria">Pressão no Trabalho</h2>
+<p>16. Sinto pressão excessiva para cumprir metas.</p>
+<label><input type="radio" name="p16" required>Nunca</label>
+<label><input type="radio" name="p16">Raramente</label>
+<label><input type="radio" name="p16">Às vezes</label>
+<label><input type="radio" name="p16">Frequentemente</label>
+<label><input type="radio" name="p16">Sempre</label>
+
+<p>17. Meu trabalho exige ritmo acelerado.</p>
+<label><input type="radio" name="p17" required>Nunca</label>
+<label><input type="radio" name="p17">Raramente</label>
+<label><input type="radio" name="p17">Às vezes</label>
+<label><input type="radio" name="p17">Frequentemente</label>
+<label><input type="radio" name="p17">Sempre</label>
+
+<p>18. Frequentemente preciso trabalhar sob pressão.</p>
+<label><input type="radio" name="p18" required>Nunca</label>
+<label><input type="radio" name="p18">Raramente</label>
+<label><input type="radio" name="p18">Às vezes</label>
+<label><input type="radio" name="p18">Frequentemente</label>
+<label><input type="radio" name="p18">Sempre</label>
+
+<div class="nav">
+<button type="button" onclick="voltarPagina()">Voltar</button>
+<button type="button" onclick="proximaPagina()">Próximo</button>
+</div>
+</div>
+
+<!-- PAGINA 8: Valores Organizacionais -->
+<div class="pagina">
+<h2 class="categoria">Valores Organizacionais</h2>
+<p>19. A empresa respeita os funcionários.</p>
+<label><input type="radio" name="p19" required>Nunca</label>
+<label><input type="radio" name="p19">Raramente</label>
+<label><input type="radio" name="p19">Às vezes</label>
+<label><input type="radio" name="p19">Frequentemente</label>
+<label><input type="radio" name="p19">Sempre</label>
+
+<p>20. Sinto que a empresa se preocupa com o bem-estar dos colaboradores.</p>
+<label><input type="radio" name="p20" required>Nunca</label>
+<label><input type="radio" name="p20">Raramente</label>
+<label><input type="radio" name="p20">Às vezes</label>
+<label><input type="radio" name="p20">Frequentemente</label>
+<label><input type="radio" name="p20">Sempre</label>
+
+<p>21. Confio na gestão da empresa.</p>
+<label><input type="radio" name="p21" required>Nunca</label>
+<label><input type="radio" name="p21">Raramente</label>
+<label><input type="radio" name="p21">Às vezes</label>
+<label><input type="radio" name="p21">Frequentemente</label>
+<label><input type="radio" name="p21">Sempre</label>
+
+<div class="nav">
+<button type="button" onclick="voltarPagina()">Voltar</button>
+<button type="button" onclick="proximaPagina()">Próximo</button>
+</div>
+</div>
+
+<!-- PAGINA 9: Equilíbrio Vida e Trabalho 22-25 -->
+<div class="pagina">
+<h2 class="categoria">Equilíbrio Vida e Trabalho</h2>
+<p>22. Tenho tempo suficiente para descanso.</p>
+<label><input type="radio" name="p22" required>Nunca</label>
+<label><input type="radio" name="p22">Raramente</label>
+<label><input type="radio" name="p22">Às vezes</label>
+<label><input type="radio" name="p22">Frequentemente</label>
+<label><input type="radio" name="p22">Sempre</label>
+
+<p>23. Consigo equilibrar vida pessoal e profissional.</p>
+<label><input type="radio" name="p23" required>Nunca</label>
+<label><input type="radio" name="p23">Raramente</label>
+<label><input type="radio" name="p23">Às vezes</label>
+<label><input type="radio" name="p23">Frequentemente</label>
+<label><input type="radio" name="p23">Sempre</label>
+
+<p>24. Tenho tempo para lazer.</p>
+<label><input type="radio" name="p24" required>Nunca</label>
+<label><input type="radio" name="p24">Raramente</label>
+<label><input type="radio" name="p24">Às vezes</label>
+<label><input type="radio" name="p24">Frequentemente</label>
+<label><input type="radio" name="p24">Sempre</label>
+
+<p>25. Meu trabalho interfere na vida pessoal.</p>
+<label><input type="radio" name="p25" required>Nunca</label>
+<label><input type="radio" name="p25">Raramente</label>
+<label><input type="radio" name="p25">Às vezes</label>
+<label><input type="radio" name="p25">Frequentemente</label>
+<label><input type="radio" name="p25">Sempre</label>
+
+<div class="nav">
+<button type="button" onclick="voltarPagina()">Voltar</button>
+<button type="button" onclick="proximaPagina()">Próximo</button>
+</div>
+</div>
+
+<!-- PAGINA 10: Equilíbrio Vida e Trabalho 26-29 -->
+<div class="pagina">
+<h2 class="categoria">Equilíbrio Vida e Trabalho</h2>
+<p>26. Consigo me desligar do trabalho fora do expediente.</p>
+<label><input type="radio" name="p26" required>Nunca</label>
+<label><input type="radio" name="p26">Raramente</label>
+<label><input type="radio" name="p26">Às vezes</label>
+<label><input type="radio" name="p26">Frequentemente</label>
+<label><input type="radio" name="p26">Sempre</label>
+
+<p>27. Tenho energia para outras atividades.</p>
+<label><input type="radio" name="p27" required>Nunca</label>
+<label><input type="radio" name="p27">Raramente</label>
+<label><input type="radio" name="p27">Às vezes</label>
+<label><input type="radio" name="p27">Frequentemente</label>
+<label><input type="radio" name="p27">Sempre</label>
+
+<p>28. Meu trabalho contribui para meu bem-estar.</p>
+<label><input type="radio" name="p28" required>Nunca</label>
+<label><input type="radio" name="p28">Raramente</label>
+<label><input type="radio" name="p28">Às vezes</label>
+<label><input type="radio" name="p28">Frequentemente</label>
+<label><input type="radio" name="p28">Sempre</label>
+
+<p>29. Sinto que minha vida pessoal está equilibrada.</p>
+<label><input type="radio" name="p29" required>Nunca</label>
+<label><input type="radio" name="p29">Raramente</label>
+<label><input type="radio" name="p29">Às vezes</label>
+<label><input type="radio" name="p29">Frequentemente</label>
+<label><input type="radio" name="p29">Sempre</label>
+
+<div class="nav">
+<button type="button" onclick="voltarPagina()">Voltar</button>
+<button type="button" onclick="proximaPagina()">Próximo</button>
+</div>
+</div>
+
+<!-- PAGINA 11: Comentário -->
+<div class="pagina">
+<h2 class="categoria">Comentário Adicionais</h2>
+<p>Se desejar, deixe algum comentario</p>
+<textarea name="comentario" rows="5" placeholder="Digite seu comentário aqui..."></textarea>
+
+<div class="nav">
+<button type="button" onclick="voltarPagina()">Voltar</button>
+<button type="submit">Enviar respostas</button>
+</div>
+</div>
+
+</form>
+</div>
+
+<script>
+
+let paginaAtual = 0;
+const paginas = document.querySelectorAll(".pagina");
+
+function proximaPagina(){
+    if(paginaAtual < paginas.length - 1){
+        paginas[paginaAtual].classList.remove("ativa");
+        paginaAtual++;
+        paginas[paginaAtual].classList.add("ativa");
+    }
+}
+
+function voltarPagina(){
+    if(paginaAtual > 0){
+        paginas[paginaAtual].classList.remove("ativa");
+        paginaAtual--;
+        paginas[paginaAtual].classList.add("ativa");
+    }
+}
+
+// Envio do formulário
+document.getElementById("formulario").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const formData = new FormData(this);
+
+let respostas = JSON.parse(localStorage.getItem("respostas")) || [];
+
+let novaResposta = {};
+
+formData.forEach((value, key) => {
+novaResposta[key] = value;
+});
+
+// 🔹 salva empresa e cargo
+novaResposta.empresa = document.getElementById("empresa").value;
+novaResposta.cargo = document.getElementById("cargo").value;
+
+novaResposta.data = new Date().toLocaleDateString();
+
+respostas.push(novaResposta);
+
+localStorage.setItem("respostas", JSON.stringify(respostas));
+
+alert("Respostas enviadas com sucesso!");
+
+window.location.href = "index.html";
+
+});
+
+</script>

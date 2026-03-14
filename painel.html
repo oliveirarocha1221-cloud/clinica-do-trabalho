@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+<meta charset="UTF-8">
+<title>Painel da Empresa</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f0f4f8;
+padding:40px;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+}
+
+.voltar{
+display:inline-block;
+margin-bottom:20px;
+background:#0c4a6e;
+color:white;
+padding:10px 20px;
+text-decoration:none;
+border-radius:6px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+margin-top:20px;
+}
+
+th,td{
+padding:12px;
+border:1px solid #ddd;
+}
+
+th{
+background:#0c4a6e;
+color:white;
+}
+
+button{
+margin-top:20px;
+padding:10px 20px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+canvas{
+margin-top:30px;
+background:white;
+padding:20px;
+border-radius:8px;
+}
+
+.risco{
+padding:20px;
+border-radius:10px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+margin-bottom:30px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<a href="empresas.html" class="voltar">← Voltar</a>
+
+<h1 id="tituloEmpresa"></h1>
+
+<h2>Indicador de Risco Psicossocial</h2>
+
+<div id="riscoBox" class="risco">
+Calculando...
+</div>
+
+<h2>Distribuição por Cargo</h2>
+<canvas id="graficoCargo"></canvas>
+
+<h2>Dashboard de Perguntas</h2>
+<div id="graficosPerguntas"></div>
+
+<button onclick="gerarPDF()">Gerar Relatório PDF</button>
+
+<table id="tabela">
+
+<tr>
+<th>Empresa</th>
+<th>Cargo</th>
+<th>Comentário</th>
+<th>Data</th>
+</tr>
+
+</table>
+
+</div>
+
+<script>
+
+let params = new URLSearchParams(window.location.search);
+
+let empresaSelecionada = params.get("empresa");
+
+document.getElementById("tituloEmpresa").innerText = empresaSelecionada;
+
+let dados = JSON.parse(localStorage.getItem("respostas")) || [];
+
+let dadosEmpresa = dados.filter(item => item.empresa === empresaSelecionada);
+
+// ===== CALCULAR RISCO PSICOSSOCIAL =====
+
+let soma = 0;
+let total = 0;
+
+dadosEmpresa.forEach(item=>{
+
+for(let i = 1; i <= 29; i++){
+
+let resposta = item["pergunta"+i];
+
+if(resposta){
+
+if(resposta == "Nunca") soma += 1;
+if(resposta == "Às vezes") soma += 2;
+if(resposta == "Frequentemente") soma += 3;
+if(resposta == "Sempre") soma += 4;
+
+total++;
+
+}
+
+}
+
+});
+
+let media = soma / total;
+
+let riscoBox = document.getElementById("riscoBox");
+
+if(media <= 1.8){
+
+riscoBox.innerHTML = "🟢 BAIXO RISCO PSICOSSOCIAL";
+riscoBox.style.background = "#bbf7d0";
+
+}
+
+else if(media <= 2.8){
+
+riscoBox.innerHTML = "🟡 RISCO MODERADO";
+riscoBox.style.background = "#fde68a";
+
+}
+
+else{
+
+riscoBox.innerHTML = "🔴 ALTO RISCO PSICOSSOCIAL";
+riscoBox.style.background = "#fecaca";
+
+}
+
+// ===== TABELA E CARGOS =====
+
+let tabela = document.getElementById("tabela");
+
+let cargos = {};
+
+dadosEmpresa.forEach(item=>{
+
+let linha = tabela.insertRow();
+
+linha.insertCell(0).innerText = item.empresa;
+linha.insertCell(1).innerText = item.cargo;
+linha.insertCell(2).innerText = item.comentario || "";
+linha.insertCell(3).innerText = item.data;
+
+if(!cargos[item.cargo]){
+cargos[item.cargo] = 0;
+}
+
+cargos[item.cargo]++;
+
+});
+
+// ===== GRÁFICO DE CARGOS =====
+
+new Chart(document.getElementById("graficoCargo"),{
+
+type:"bar",
+
+data:{
+labels:Object.keys(cargos),
+datasets:[{
+label:"Funcionários por Cargo",
+data:Object.values(cargos)
+}]
+}
+
+});
+
+// ===== GRÁFICOS AUTOMÁTICOS DAS PERGUNTAS =====
+
+let containerGraficos = document.getElementById("graficosPerguntas");
+
+for(let i = 1; i <= 29; i++){
+
+let respostasPergunta = {};
+
+dadosEmpresa.forEach(item=>{
+
+let resposta = item["pergunta"+i];
+
+if(resposta){
+
+if(!respostasPergunta[resposta]){
+respostasPergunta[resposta] = 0;
+}
+
+respostasPergunta[resposta]++;
+
+}
+
+});
+
+if(Object.keys(respostasPergunta).length > 0){
+
+let canvas = document.createElement("canvas");
+
+containerGraficos.appendChild(canvas);
+
+new Chart(canvas,{
+
+type:"bar",
+
+data:{
+labels:Object.keys(respostasPergunta),
+datasets:[{
+label:"Pergunta "+i,
+data:Object.values(respostasPergunta)
+}]
+}
+
+});
+
+}
+
+}
+
+// ===== GERAR PDF =====
+
+function gerarPDF(){
+
+const { jsPDF } = window.jspdf;
+
+let doc = new jsPDF();
+
+doc.text("Relatório da Empresa: " + empresaSelecionada,20,20);
+
+let y = 40;
+
+dadosEmpresa.forEach(item=>{
+
+doc.text(
+`${item.cargo} | ${item.comentario || ""} | ${item.data}`,
+20,
+y
+);
+
+y += 10;
+
+});
+
+doc.save("relatorio-"+empresaSelecionada+".pdf");
+
+}
+
+</script>
+
+</body>
+</html>
